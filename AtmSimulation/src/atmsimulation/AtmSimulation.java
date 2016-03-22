@@ -40,8 +40,7 @@ public class AtmSimulation {
     }
 
     /**
-     * Start the ATM options to log into existing account, create a new account,
-     * or exit program
+     * Start the ATM options to log into existing account, create a new account, or exit program
      */
     public void start() {
         Scanner sc = new Scanner(System.in);
@@ -91,21 +90,24 @@ public class AtmSimulation {
 
         //receive and check name and password
         System.out.println("Input your name: ");
-        clientName = sc.nextLine().toUpperCase();
+        clientName = sc.nextLine().toLowerCase();
         System.out.println("Input your password: ");
         clientPassword = sc.nextLine();
 
-        if (names.contains(clientName)) {
-            clientID = names.indexOf(clientName);
-            if (passwords.get(clientID).equals(clientPassword)) {
-                mainMenu();
+        for (String item : names) {
+            if (item.equalsIgnoreCase(clientName)) {
+                clientID = names.indexOf(clientName);
+                if (passwords.get(clientID).equals(clientPassword)) {
+                    mainMenu();
+                }
             }
-        } else {//failure. Decrease maximum permited tries
-            System.out.println("Name and password do not match!");
-            loginAttempts++;
-            System.out.println((MAX_INPUT_ATTEMPTS - loginAttempts) + " attempts remaining.\n");
-            login();
         }
+
+        System.out.println("Name and password do not match!");
+        loginAttempts++;
+        System.out.println((MAX_INPUT_ATTEMPTS - loginAttempts) + " attempts remaining.\n");
+        login();
+
     }
 
     /**
@@ -145,6 +147,7 @@ public class AtmSimulation {
         //add new user to database
         names.add(clientName);
         passwords.add(clientPassword);
+        sumsInAcounts.add(0);
         System.out.println("\nCongratulations! Your account has been created.");
 
         //return to start. new users must re-log
@@ -206,8 +209,7 @@ public class AtmSimulation {
     }
 
     /**
-     * Clears current user credentials and displays the login/sign up option
-     * does not stop the program
+     * Clears current user credentials and displays the login/sign up option does not stop the program
      */
     private void logout() {
 
@@ -237,8 +239,7 @@ public class AtmSimulation {
     }
 
     /**
-     * Central decision hub for the ATM options: account summary, cash withdraw
-     * and deposit, log out, exit
+     * Central decision hub for the ATM options: account summary, cash withdraw and deposit, log out, exit
      */
     private void mainMenu() {
         Scanner sc = new Scanner(System.in);
@@ -307,8 +308,7 @@ public class AtmSimulation {
     }
 
     /**
-     * Subtracts a given amount from the current user's cash total.Does not
-     * allow negative input or negative result
+     * Subtracts a given amount from the current user's cash total.Does not allow negative input or negative result
      */
     private void cashWithdrawal() {
         Scanner sc = new Scanner(System.in);
@@ -345,8 +345,7 @@ public class AtmSimulation {
     }
 
     /**
-     * Adds a given amount to the current user's cash total. Does not allow
-     * negative input
+     * Adds a given amount to the current user's cash total. Does not allow negative input
      */
     private void cashDeposit() {
         Scanner sc = new Scanner(System.in);
@@ -370,8 +369,7 @@ public class AtmSimulation {
     }
 
     /**
-     * Provide the user with the option to repeat the operation or quit to
-     * previous state
+     * Provide the user with the option to repeat the operation or quit to previous state
      *
      * @return true for repeat, false for quit
      */
@@ -393,8 +391,7 @@ public class AtmSimulation {
      * Checks if a string is a positive integer
      *
      * @param numberStr string to be checked
-     * @return the integer equivalent of numberStr or -1 if the string
-     * represents a negative number or is not an integer
+     * @return the integer equivalent of numberStr or -1 if the string represents a negative number or is not an integer
      */
     private int checkNumber(String numberStr) {
         int result = -1;
